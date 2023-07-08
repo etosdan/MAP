@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/questionTextEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Question Text"
+        android:inputType="text"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/option1EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Option 1"
+        android:inputType="text"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/option2EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Option 2"
+        android:inputType="text"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/option3EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Option 3"
+        android:inputType="text"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/option4EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Option 4"
+        android:inputType="text"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correct Answers"
+        android:layout_marginBottom="8dp" />
+
+    <CheckBox
+        android:id="@+id/option1CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option 1"
+        android:layout_marginBottom="4dp" />
+
+    <CheckBox
+        android:id="@+id/option2CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option 2"
+        android:layout_marginBottom="4dp" />
+
+    <CheckBox
+        android:id="@+id/option3CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option 3"
+        android:layout_marginBottom="4dp" />
+
+    <CheckBox
+        android:id="@+id/option4CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option 4" />
+
+</LinearLayout>

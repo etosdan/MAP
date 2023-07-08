@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">UlazniTestovi</string>
+    <string name="registration_form">Registration Form</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="university">University</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="role" />
+    <string name="role_prompt" />
+    <string-array name="university_array">
+        <item></item> <!-- Blank initial value -->
+        <item>TVZ</item>
+        <item>FER</item>
+        <item>FOI</item>
+        <item>VSITE</item>
+        <item>FSB</item>
+        <item>ALGEBRA</item>
+    </string-array>
 </resources>

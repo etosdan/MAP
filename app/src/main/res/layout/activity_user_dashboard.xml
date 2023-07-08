@@ -1,10 +1,36 @@
-<!-- activity_user_dashboard.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".UserDashboardActivity">
 
-    <!-- Include buttons or menu items for quiz taking, result viewing, etc. -->
+    <TextView
+        android:id="@+id/testHistoryTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test History:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/pendingTestsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/testHistoryTextView"
+        android:layout_marginTop="16dp"
+        android:text="Pending Tests:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/percentageCorrectTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pendingTestsTextView"
+        android:layout_marginTop="16dp"
+        android:text="Percentage of Correct Answers: "
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

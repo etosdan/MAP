@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Test Title -->
+    <EditText
+        android:id="@+id/testTitleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Test Title"
+        android:inputType="text"
+        android:layout_marginBottom="16dp" />
+
+    <!-- University Group -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="University Group"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/universityGroupSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Timer -->
+    <EditText
+        android:id="@+id/timerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Timer (in minutes)"
+        android:inputType="number"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Add Question Button -->
+    <Button
+        android:id="@+id/addQuestionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Question"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Question List -->
+    <TextView
+        android:id="@+id/questionListTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Questions"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:id="@+id/questionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Placeholder for dynamically added questions -->
+
+    </LinearLayout>
+
+    <!-- Create Test Button -->
+    <Button
+        android:id="@+id/createTestButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Test" />
+
+</LinearLayout>

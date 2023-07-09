@@ -1,4 +1,4 @@
-package hr.vsite.ulaznitestovi.result;// ResultAdapter.java
+package hr.vsite.ulaznitestovi.adapter;// ResultAdapter.java
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import hr.vsite.ulaznitestovi.R;
+import hr.vsite.ulaznitestovi.models.Result;
 
 public class ResultAdapter extends BaseAdapter {
     private Context context;

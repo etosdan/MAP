@@ -1,6 +1,5 @@
-package hr.vsite.ulaznitestovi.tests;
+package hr.vsite.ulaznitestovi;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -17,17 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import hr.vsite.ulaznitestovi.R;
-import hr.vsite.ulaznitestovi.db.FirestoreDatabase;
+import hr.vsite.ulaznitestovi.adapter.TestSave;
+import hr.vsite.ulaznitestovi.models.Question;
+import hr.vsite.ulaznitestovi.models.Test;
+import hr.vsite.ulaznitestovi.repository.TestRepository;
 
 public class CreateTestActivity extends AppCompatActivity {
 
@@ -40,6 +35,8 @@ public class CreateTestActivity extends AppCompatActivity {
     private List<Question> questionList;
     private ArrayAdapter<String> universityGroupAdapter;
     private LinearLayout questionContainer;
+    private TestRepository testRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,42 +156,21 @@ public class CreateTestActivity extends AppCompatActivity {
         questionContainer.addView(questionView);
     }
     private void saveTestDataToDatabase(String testTitle, String universityGroup, String timer, List<Question> questionList) {
-        // TODO: Implement the logic to save the test data to the database or any other storage
-        // You'll need to define your own data model and database operations
+        String authorId = getIntent().getStringExtra("userId");
 
-        // Example placeholder implementation:
-        // Assuming you have a Test class and a FirestoreDatabase class
+        Test test = new Test(testTitle, Integer.parseInt(timer), questionList, authorId); // Pass null for authorId for now
+    testRepository.saveTest(test,new TestSave() {
+        @Override
+        public void onTestSaved(String testId) {
+            Toast.makeText(CreateTestActivity.this, "Test created successfully", Toast.LENGTH_SHORT).show();
 
-        // Create a new Test object with the provided data
-        Test test = new Test(testTitle, Integer.parseInt(timer), questionList);
+        }
+        @Override
+        public void onFailure(String errorMessage) {
+            Toast.makeText(CreateTestActivity.this, "Failed to create test: " + errorMessage, Toast.LENGTH_SHORT).show();
 
-        // TODO: Assign the universityGroup to the test object
-
-        // Get the FirestoreDatabase instance
-        FirebaseFirestore db = FirestoreDatabase.getInstance();
-
-        // Access the "tests" collection in the database
-        CollectionReference testsCollection = db.collection("tests");
-
-        // Add the test document to the "tests" collection
-        testsCollection.add(test)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        // Test data saved successfully
-                        String testId = documentReference.getId();
-                        Toast.makeText(CreateTestActivity.this, "Test created successfully", Toast.LENGTH_SHORT).show();
-
-                        // TODO: Handle additional actions or navigation if needed
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Failed to save test data
-                        Toast.makeText(CreateTestActivity.this, "Failed to create test", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        }
+    });
     }
     private void clearForm() {
         testTitleEditText.getText().clear();

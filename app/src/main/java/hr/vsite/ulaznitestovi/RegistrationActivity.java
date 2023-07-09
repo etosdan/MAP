@@ -20,6 +20,8 @@ import androidx.annotation.NonNull;
 
 
 import hr.vsite.ulaznitestovi.db.FirestoreDatabase;
+import hr.vsite.ulaznitestovi.models.Role;
+import hr.vsite.ulaznitestovi.models.User;
 
 public class RegistrationActivity extends AppCompatActivity {
 

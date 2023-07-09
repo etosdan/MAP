@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".AdminDashboardActivity" />
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".tests.CreateTestActivity" />
+        <activity android:name=".CreateTestActivity" />
 
     </application>
 

@@ -16,6 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import hr.vsite.ulaznitestovi.db.FirestoreDatabase;
+import hr.vsite.ulaznitestovi.models.Role;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -65,12 +66,13 @@ public class LoginActivity extends AppCompatActivity {
                                     // Password is correct, perform login logic
                                     String role = document.getString("role");
 
-                                    if (role.equals(Role.ADMIN)) {
+                                    if (role.equals(Role.ADMIN.name())) {
                                         // Admin login
                                         Toast.makeText(LoginActivity.this, "Admin login successful", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+                                        intent.putExtra("userId", userId);
                                         startActivity(intent);
-                                    } else if (role.equals(Role.USER)) {
+                                    } else if (role.equals(Role.USER.name())) {
                                         // User login
                                         String name = document.getString("name");
                                         // ... Get other user data

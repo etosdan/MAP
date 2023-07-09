@@ -1,31 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/groupNameTextView"
+        android:id="@+id/testsTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Group Name"
+        android:text="Tests"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
         android:padding="16dp" />
 
     <ListView
-        android:id="@+id/resultsListView"
+        android:id="@+id/testsListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/groupNameTextView"
-        android:layout_marginTop="16dp"
-        android:layout_above="@+id/createTestButton" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/createTestButton"
+    <TextView
+        android:id="@+id/groupsTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Test"
-        android:layout_alignParentBottom="true" />
+        android:text="Groups"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_marginTop="16dp" />
 
-</RelativeLayout>
+    <ListView
+        android:id="@+id/groupsListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/createTestButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/create_test" />
+
+        <Button
+            android:id="@+id/createGroupButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/create_group" />
+
+    </LinearLayout>
+
+</LinearLayout>

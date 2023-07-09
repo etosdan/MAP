@@ -1,12 +1,13 @@
-package hr.vsite.ulaznitestovi.tests;
+package hr.vsite.ulaznitestovi.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Question {
     private String questionText;
     private List<String> options;
-    private List<Integer> correctAnswerIndices;
+    private final List<Integer> correctAnswerIndices;
     // Add any additional properties as needed
 
     public Question(String questionText, List<String> options, List<Integer> correctAnswerIndices) {
@@ -33,8 +34,8 @@ public class Question {
         List<Integer> userAnswerIndices = convertUserAnswer(userAnswer);
 
         // Check if the user answer matches the correct answer indices
-        return correctAnswerIndices.containsAll(userAnswerIndices)
-                && userAnswerIndices.containsAll(correctAnswerIndices);
+        return new HashSet<>(correctAnswerIndices).containsAll(userAnswerIndices)
+                && new HashSet<>(userAnswerIndices).containsAll(correctAnswerIndices);
     }
 
     private List<Integer> convertUserAnswer(String userAnswer) {
@@ -50,6 +51,14 @@ public class Question {
             }
         }
         return indices;
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText=questionText;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options=options;
     }
 
     // Add any additional methods as needed

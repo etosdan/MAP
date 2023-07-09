@@ -10,6 +10,8 @@
     <string name="register">Register</string>
     <string name="role" />
     <string name="role_prompt" />
+    <string name="create_test">Create Test</string>
+    <string name="create_group">Create Group</string>
     <string-array name="university_array">
         <item></item> <!-- Blank initial value -->
         <item>TVZ</item>

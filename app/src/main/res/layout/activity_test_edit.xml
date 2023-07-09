@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/editTestImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:contentDescription="Edit Test"
+        android:focusable="true"
+        android:src="@drawable/ic_trash" />
+
+    <EditText
+        android:id="@+id/testNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_toStartOf="@id/editTestImageView"
+        android:hint="Test Name" />
+
+    <EditText
+        android:id="@+id/timerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/testNameEditText"
+        android:layout_marginTop="16dp"
+        android:layout_toStartOf="@id/editTestImageView"
+        android:hint="Test Duration (minutes)" />
+
+    <Button
+        android:id="@+id/addQuestionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timerEditText"
+        android:layout_marginTop="16dp"
+        android:layout_toStartOf="@id/editTestImageView"
+        android:text="Add Question" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/questionsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addQuestionButton"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionsRecyclerView"
+        android:layout_marginTop="16dp"
+        android:text="Save Changes" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/saveButton"
+        android:layout_marginTop="16dp"
+        android:text="Cancel" />
+
+</RelativeLayout>

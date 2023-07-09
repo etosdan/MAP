@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.vsite.ulaznitestovi.db.FirestoreDatabase;
-import hr.vsite.ulaznitestovi.tests.Question;
-import hr.vsite.ulaznitestovi.tests.Test;
+import hr.vsite.ulaznitestovi.models.Question;
+import hr.vsite.ulaznitestovi.models.Test;
 
 public class UserDashboardActivity extends AppCompatActivity {
 
@@ -91,7 +91,7 @@ public class UserDashboardActivity extends AppCompatActivity {
     private void displayTestHistory(List<Test> testHistory) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Test test : testHistory) {
-            stringBuilder.append(test.getTestTitle())
+            stringBuilder.append(test.getTestName())
                     .append(" - ")
                     .append(test.isPassed() ? "Passed" : "Failed")
                     .append("\n");

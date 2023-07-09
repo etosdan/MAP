@@ -1,4 +1,4 @@
-package hr.vsite.ulaznitestovi;
+package hr.vsite.ulaznitestovi.models;
 
 public class User {
     private String userId;

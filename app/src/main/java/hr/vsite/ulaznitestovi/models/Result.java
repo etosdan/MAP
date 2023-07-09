@@ -1,4 +1,4 @@
-package hr.vsite.ulaznitestovi.result;
+package hr.vsite.ulaznitestovi.models;
 
 public class Result {
     private String userName;

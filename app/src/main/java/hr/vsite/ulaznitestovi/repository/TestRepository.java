@@ -16,7 +16,7 @@ import hr.vsite.ulaznitestovi.models.Test;
 
 public class TestRepository {
 
-    private FirebaseFirestore firestore;
+    private final FirebaseFirestore firestore;
 
     public TestRepository() {
         firestore = FirebaseFirestore.getInstance();
@@ -30,7 +30,7 @@ public class TestRepository {
         Map<String, Object> testData = new HashMap<>();
         testData.put("testName", test.getTestName());
         testData.put("testDuration", test.getTestDuration());
-        // Add any other test data you want to save
+        testData.put("questions", test.getQuestions()); // Save the question list
 
         // Set the test data in the document reference
         testRef.set(testData)
@@ -78,6 +78,7 @@ public class TestRepository {
                     callback.onFailure(e.getMessage());
                 });
     }
+
     public void deleteTest(String testId, TestDelete callback) {
         // Get the document reference for the test
         DocumentReference testRef = firestore.collection("tests").document(testId);

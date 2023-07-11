@@ -197,13 +197,12 @@ public class CreateTestActivity extends AppCompatActivity {
             @Override
             public void onTestSaved(String testId) {
                 Toast.makeText(CreateTestActivity.this, "Test created successfully", Toast.LENGTH_SHORT).show();
-
+                finish();
             }
 
             @Override
             public void onFailure(String errorMessage) {
                 Toast.makeText(CreateTestActivity.this, "Failed to create test: " + errorMessage, Toast.LENGTH_SHORT).show();
-
             }
         });
     }

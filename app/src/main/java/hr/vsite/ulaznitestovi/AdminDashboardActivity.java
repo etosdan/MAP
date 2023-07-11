@@ -119,7 +119,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         testList.clear();
 
         // Query the tests collection where the authorId is equal to the userId
-        firestore.getInstance().collection("tests")
+        FirebaseFirestore.getInstance().collection("tests")
                 .whereEqualTo("authorId", userId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -144,22 +144,34 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
 
+    // ...
+
     private void loadGroups(String userId) {
         // Clear the existing groupList
         groupList.clear();
 
         // Query the groups collection where the authorId is equal to the userId
-        firestore.getInstance().collection("groups")
+        FirebaseFirestore.getInstance().collection("groups")
                 .whereEqualTo("authorId", userId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    // Clear the existing groupList
+                    groupList.clear();
+
                     // Iterate through the query results
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        // Get the group name from the document
+                        // Get the group details from the document
+                        String groupId = document.getId();
                         String groupName = document.getString("groupName");
+                        String university = document.getString("university");
+                        String authorId = document.getString("authorId");
+                        List<String> testIds = (List<String>) document.get("testIds");
+                        List<String> userIds = (List<String>) document.get("userIds");
 
-                        // Create a new Group object with only the group name
-                        Group group = new Group(groupName);
+                        // Create a new Group object with the retrieved details
+                        Group group = new Group(groupName, university, authorId, userIds);
+                        group.setGroupId(groupId);
+                        group.setTestIds(testIds);
 
                         // Add the group to the groupList
                         groupList.add(group);
@@ -169,9 +181,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     groupAdapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(AdminDashboardActivity.this, "Failed to load groups", Toast.LENGTH_SHORT).show();
+                    // Handle the failure to fetch the group documents
+                    // Display an error message or perform any necessary error handling
                 });
     }
-
 }
 

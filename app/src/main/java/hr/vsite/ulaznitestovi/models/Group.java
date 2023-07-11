@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Group {
+    private String authorName;
     private String groupId;
     private String groupName;
     private String university;
-
     private String authorId;
     private List<String> testIds;
     private List<String> userIds;
@@ -23,10 +23,9 @@ public class Group {
         this.testIds = new ArrayList<>(); // Initialize as an empty list
         this.userIds = userIds;
     }
-
-
+    
     public Group(String groupName) {
-        this.groupName=groupName;
+        this.groupName = groupName;
     }
 
     public String getGroupId() {

@@ -20,23 +20,34 @@ public class GroupAdapter extends ArrayAdapter<Group> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
         Group group = getItem(position);
 
-        // Check if an existing view is being reused, otherwise inflate the view
+        ViewHolder viewHolder;
         if (convertView == null) {
+            viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_group, parent, false);
+            viewHolder.groupNameTextView = convertView.findViewById(R.id.groupNameTextView);
+            viewHolder.authorNameTextView = convertView.findViewById(R.id.authorNameTextView);
+            viewHolder.memberCountTextView = convertView.findViewById(R.id.memberCountTextView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // Lookup view for data population
-        TextView groupNameTextView = convertView.findViewById(R.id.groupNameTextView);
-        TextView groupAuthorTextView = convertView.findViewById(R.id.authorNameTextView);
+        viewHolder.groupNameTextView.setText(group.getGroupName());
+        viewHolder.authorNameTextView.setText("Author: " + group.getAuthorId());
 
-        // Populate the data into the template view using the data object
-        groupNameTextView.setText(group.getGroupName());
-        groupAuthorTextView.setText("Author: " + group.getAuthorId());
+        // Set the member count
+        int memberCount = group.getUserIds().size();
+        String memberCountText = "Members: " + memberCount;
+        viewHolder.memberCountTextView.setText(memberCountText);
 
-        // Return the completed view to render on screen
         return convertView;
+    }
+
+    private static class ViewHolder {
+        TextView groupNameTextView;
+        TextView authorNameTextView;
+        TextView memberCountTextView;
     }
 }

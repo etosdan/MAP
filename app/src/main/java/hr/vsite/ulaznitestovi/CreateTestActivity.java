@@ -1,7 +1,5 @@
 package hr.vsite.ulaznitestovi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -16,12 +14,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import hr.vsite.ulaznitestovi.adapter.GroupFetch;
 import hr.vsite.ulaznitestovi.adapter.TestSave;
+import hr.vsite.ulaznitestovi.models.Group;
 import hr.vsite.ulaznitestovi.models.Question;
 import hr.vsite.ulaznitestovi.models.Test;
+import hr.vsite.ulaznitestovi.repository.GroupRepository;
 import hr.vsite.ulaznitestovi.repository.TestRepository;
 
 public class CreateTestActivity extends AppCompatActivity {
@@ -36,7 +39,7 @@ public class CreateTestActivity extends AppCompatActivity {
     private ArrayAdapter<String> universityGroupAdapter;
     private LinearLayout questionContainer;
     private TestRepository testRepository;
-
+    private GroupRepository groupRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,9 @@ public class CreateTestActivity extends AppCompatActivity {
         questionList = new ArrayList<>();
         universityGroupAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
         universityGroupSpinner.setAdapter(universityGroupAdapter);
+
+        testRepository = new TestRepository();
+        groupRepository = new GroupRepository();
 
         addQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +80,30 @@ public class CreateTestActivity extends AppCompatActivity {
                 }
 
                 saveTestDataToDatabase(testTitle, universityGroup, timer, questionList);
+            }
+        });
 
-                Toast.makeText(CreateTestActivity.this, "Test created successfully", Toast.LENGTH_SHORT).show();
+        // Fetch and populate university groups
+        String userId = getIntent().getStringExtra("userId");
+        groupRepository.getGroupsByAuthorId(userId, new GroupFetch() {
+            @Override
+            public void onGroupsFetched(List<Group> groups) {
+                // Clear the adapter
+                universityGroupAdapter.clear();
 
-                clearForm();
-                finish();
+                // Add university group names to the adapter
+                for (Group group : groups) {
+                    universityGroupAdapter.add(group.getGroupName());
+                }
+
+                // Notify the adapter of the data set change
+                universityGroupAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                // Handle the failure case
+                Toast.makeText(CreateTestActivity.this, "Failed to fetch university groups: " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -107,11 +132,18 @@ public class CreateTestActivity extends AppCompatActivity {
                 String option2 = option2EditText.getText().toString();
                 String option3 = option3EditText.getText().toString();
                 String option4 = option4EditText.getText().toString();
+
+                if (questionText.isEmpty() || option1.isEmpty() || option2.isEmpty() || option3.isEmpty() || option4.isEmpty()) {
+                    Toast.makeText(CreateTestActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 List<String> options = new ArrayList<>();
                 options.add(option1);
                 options.add(option2);
                 options.add(option3);
                 options.add(option4);
+
                 List<Integer> correctAnswers = new ArrayList<>();
                 if (option1CheckBox.isChecked()) {
                     correctAnswers.add(1);
@@ -133,6 +165,7 @@ public class CreateTestActivity extends AppCompatActivity {
                 displayQuestion(question);
             }
         });
+
         builder.setNegativeButton("Cancel", null);
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -155,23 +188,26 @@ public class CreateTestActivity extends AppCompatActivity {
 
         questionContainer.addView(questionView);
     }
+
     private void saveTestDataToDatabase(String testTitle, String universityGroup, String timer, List<Question> questionList) {
         String authorId = getIntent().getStringExtra("userId");
 
         Test test = new Test(testTitle, Integer.parseInt(timer), questionList, authorId); // Pass null for authorId for now
-    testRepository.saveTest(test,new TestSave() {
-        @Override
-        public void onTestSaved(String testId) {
-            Toast.makeText(CreateTestActivity.this, "Test created successfully", Toast.LENGTH_SHORT).show();
+        testRepository.saveTest(test, new TestSave() {
+            @Override
+            public void onTestSaved(String testId) {
+                Toast.makeText(CreateTestActivity.this, "Test created successfully", Toast.LENGTH_SHORT).show();
 
-        }
-        @Override
-        public void onFailure(String errorMessage) {
-            Toast.makeText(CreateTestActivity.this, "Failed to create test: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
 
-        }
-    });
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(CreateTestActivity.this, "Failed to create test: " + errorMessage, Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
+
     private void clearForm() {
         testTitleEditText.getText().clear();
         universityGroupSpinner.setSelection(0);

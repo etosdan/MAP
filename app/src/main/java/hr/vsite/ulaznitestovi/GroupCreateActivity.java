@@ -2,6 +2,7 @@ package hr.vsite.ulaznitestovi;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,9 +58,19 @@ public class GroupCreateActivity extends AppCompatActivity {
         userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         userRecyclerView.setAdapter(checkBoxListAdapter);
 
-        // Retrieve users by university and update the list
-        String selectedUniversity = getSelectedUniversity();
-        getUsersByUniversity(selectedUniversity);
+        // Set a listener to the university spinner
+        universitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedUniversity = getSelectedUniversity();
+                getUsersByUniversity(selectedUniversity);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
 
         createUserGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,11 +99,15 @@ public class GroupCreateActivity extends AppCompatActivity {
             }
         });
     }
-
     private void createGroup() {
         String groupName = groupNameEditText.getText().toString();
         String university = getSelectedUniversity();
         List<String> selectedUserIds = checkBoxListAdapter.getSelectedUserIds();
+
+        if (selectedUserIds.isEmpty()) {
+            Toast.makeText(GroupCreateActivity.this, "Please select at least one user.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String authorId = getIntent().getStringExtra("userId");
 
@@ -118,6 +133,5 @@ public class GroupCreateActivity extends AppCompatActivity {
                 Toast.makeText(GroupCreateActivity.this, "Failed to create group: " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

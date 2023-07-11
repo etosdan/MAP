@@ -24,6 +24,10 @@
         <activity android:name=".AdminDashboardActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".CreateTestActivity" />
+        <activity android:name=".TestEditActivity" />
+        <activity android:name=".GroupCreateActivity" />
+        <activity android:name=".GroupEditActivity" />
+
 
     </application>
 

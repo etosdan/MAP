@@ -55,8 +55,8 @@ public class GroupEditActivity extends AppCompatActivity {
             public void onGroupRetrieved(Group retrievedGroup) {
                 group = retrievedGroup;
 
-                // Populate the EditText with the existing group name
-                groupNameEditText.setText(group.getGroupName());
+                // Set the placeholder text for the group name EditText with the existing group name
+                groupNameEditText.setHint(group.getGroupName());
 
                 // Retrieve users with the same university as the group
                 getUsersByUniversity(group.getUniversity());
@@ -77,6 +77,7 @@ public class GroupEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteGroup();
+                finish();
             }
         });
 
@@ -84,6 +85,7 @@ public class GroupEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateGroup();
+                finish();
             }
         });
 
@@ -117,6 +119,7 @@ public class GroupEditActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void updateGroup() {
         String newGroupName = groupNameEditText.getText().toString();

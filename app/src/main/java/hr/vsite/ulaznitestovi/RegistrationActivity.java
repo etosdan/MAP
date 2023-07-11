@@ -33,6 +33,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText confirmPasswordEditText;
     private TextView passwordMismatchTextView;
     private Spinner roleSpinner;
+    private Button registerButton;
+    private TextView login;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,9 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         roleSpinner = findViewById(R.id.roleSpinner);
         passwordMismatchTextView = findViewById(R.id.passwordMismatchTextView);
-        Button registerButton = findViewById(R.id.registerButton);
+        registerButton = findViewById(R.id.registerButton);
+        login=findViewById(R.id.login);
+
 
         ArrayAdapter<Role> roleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Role.values());
         roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,7 +135,13 @@ public class RegistrationActivity extends AppCompatActivity {
                         });
             }
         });
-        }
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
+            }
+        });
+    }
     private boolean isValidEmail(String email) {
         // Simple email format validation using regular expression
         String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$";

@@ -10,20 +10,21 @@ import hr.vsite.ulaznitestovi.models.User;
 
 public class UserRepository {
 
-    private FirebaseFirestore firestore;
+    private final FirebaseFirestore firestore;
 
     public UserRepository() {
         firestore = FirebaseFirestore.getInstance();
     }
 
     public void getUsersByUniversity(String university, UserRepositoryCallback callback) {
+        // Query the Firestore collection for users with the specified university
         firestore.collection("users")
                 .whereEqualTo("university", university)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
+                .addOnSuccessListener(querySnapshot -> {
                     List<User> userList = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        User user = document.toObject(User.class);
+                    for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
                         userList.add(user);
                     }
                     callback.onUsersRetrieved(userList);
@@ -35,6 +36,7 @@ public class UserRepository {
 
     public interface UserRepositoryCallback {
         void onUsersRetrieved(List<User> users);
+
         void onFailure(String errorMessage);
     }
 }

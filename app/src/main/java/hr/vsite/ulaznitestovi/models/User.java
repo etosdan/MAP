@@ -8,7 +8,9 @@ public class User {
     private String university;
     private String password;
     private Role role;
-
+    public User() {
+        // Default no-argument constructor required for Firestore deserialization
+    }
     public User(String name, String surname, String email, String university, String password, Role role) {
         this.name = name;
         this.surname = surname;

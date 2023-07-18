@@ -7,11 +7,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import hr.vsite.ulaznitestovi.adapter.CreateGroupCallback;
-import hr.vsite.ulaznitestovi.adapter.DeleteGroupCallback;
-import hr.vsite.ulaznitestovi.adapter.GetGroupById;
-import hr.vsite.ulaznitestovi.adapter.GroupFetch;
-import hr.vsite.ulaznitestovi.adapter.UpdateGroupCallback;
+import hr.vsite.ulaznitestovi.models.CreateGroupCallback;
+import hr.vsite.ulaznitestovi.models.DeleteGroupCallback;
+import hr.vsite.ulaznitestovi.models.GetGroupById;
+import hr.vsite.ulaznitestovi.models.GroupFetch;
+import hr.vsite.ulaznitestovi.models.UpdateGroupCallback;
 import hr.vsite.ulaznitestovi.models.Group;
 
 public class GroupRepository {

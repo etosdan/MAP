@@ -9,13 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hr.vsite.ulaznitestovi.adapter.TestDelete;
-import hr.vsite.ulaznitestovi.adapter.TestSave;
+import hr.vsite.ulaznitestovi.models.TestDelete;
+import hr.vsite.ulaznitestovi.models.TestFetch;
+import hr.vsite.ulaznitestovi.models.TestSave;
 import hr.vsite.ulaznitestovi.models.Question;
 import hr.vsite.ulaznitestovi.models.Test;
 
 public class TestRepository {
 
+    private static final String TESTS_COLLECTION = "tests";
     private final FirebaseFirestore firestore;
 
     public TestRepository() {
@@ -25,12 +27,15 @@ public class TestRepository {
     public void saveTest(Test test, TestSave callback) {
         // Create a document reference for the test
         DocumentReference testRef = firestore.collection("tests").document();
+        test.setTestId(testRef.getId());
 
         // Create a map of test data
         Map<String, Object> testData = new HashMap<>();
         testData.put("testName", test.getTestName());
         testData.put("testDuration", test.getTestDuration());
-        testData.put("questions", test.getQuestions()); // Save the question list
+        testData.put("questions", test.getQuestions());
+        testData.put("authorId", test.getAuthorId());
+
 
         // Set the test data in the document reference
         testRef.set(testData)
@@ -93,5 +98,26 @@ public class TestRepository {
                     // Failed to delete the test
                     callback.onFailure(e.getMessage());
                 });
+    }
+
+    public void getTestById(String testId, TestFetch callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(TESTS_COLLECTION)
+                .document(testId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Test test = documentSnapshot.toObject(Test.class);
+                        if (test != null) {
+                            test.setTestId(testId);
+                            callback.onTestFetched(test);
+                        } else {
+                            callback.onFailure("Failed to parse test");
+                        }
+                    } else {
+                        callback.onFailure("Test not found");
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
     }
 }

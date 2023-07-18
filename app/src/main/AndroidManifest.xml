@@ -13,7 +13,7 @@
         android:theme="@style/Theme.UlazniTestovi"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +21,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdminDashboardActivity" />
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".CreateTestActivity" />
-        <activity android:name=".TestEditActivity" />
-        <activity android:name=".GroupCreateActivity" />
-        <activity android:name=".GroupEditActivity" />
-
+        <activity android:name=".activity.AdminDashboardActivity" />
+        <activity android:name=".activity.RegistrationActivity" />
+        <activity android:name=".activity.CreateTestActivity" />
+        <activity android:name=".activity.TestEditActivity" />
+        <activity android:name=".activity.GroupCreateActivity" />
+        <activity android:name=".activity.GroupEditActivity" />
+        <activity android:name=".ui.HomeActivity" />
+        <activity android:name=".ui.HistoryActivity" />
+        <activity android:name=".ui.AboutActivity" />
+        <activity android:name=".ui.TestOptionActivity" />
+        <activity android:name=".ui.page.MathQuizActivity" />
+        <activity android:name=".ui.page.GeographyOrLiteratureQuizActivity" />
+        <activity android:name=".ui.FinalResultActivity" />
+        <activity android:name=".ui.RulesActivity" />
 
     </application>
 

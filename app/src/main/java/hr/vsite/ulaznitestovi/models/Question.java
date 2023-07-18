@@ -5,10 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Question {
+    private List<Integer> correctAnswerIndices;
     private String questionText;
     private List<String> options;
-    private final List<Integer> correctAnswerIndices;
-    // Add any additional properties as needed
+
+    public Question() {
+        // Required empty constructor for Firebase Firestore deserialization
+    }
 
     public Question(String questionText, List<String> options, List<Integer> correctAnswerIndices) {
         this.questionText = questionText;
@@ -21,8 +24,16 @@ public class Question {
         return questionText;
     }
 
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
     public List<String> getOptions() {
         return options;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
     }
 
     public List<Integer> getCorrectAnswerIndices() {
@@ -51,14 +62,6 @@ public class Question {
             }
         }
         return indices;
-    }
-
-    public void setQuestionText(String questionText) {
-        this.questionText=questionText;
-    }
-
-    public void setOptions(List<String> options) {
-        this.options=options;
     }
 
     // Add any additional methods as needed

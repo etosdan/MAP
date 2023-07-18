@@ -1,0 +1,105 @@
+package hr.vsite.ulaznitestovi.activity;
+
+import static hr.vsite.ulaznitestovi.helpers.PasswordHasher.verifyPassword;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import hr.vsite.ulaznitestovi.R;
+import hr.vsite.ulaznitestovi.db.FirestoreDatabase;
+import hr.vsite.ulaznitestovi.models.Role;
+import hr.vsite.ulaznitestovi.ui.HomeActivity;
+
+public class LoginActivity extends AppCompatActivity {
+
+    // Dummy admin credentials
+    private final String ADMIN_EMAIL = "admin@example.com";
+    private final String ADMIN_PASSWORD = "admin123";
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+    private TextView register;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this);
+        FirebaseFirestore db
+                = FirestoreDatabase.initialize(FirebaseFirestore.getInstance());
+
+        // Initialize UI components
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
+        register = findViewById(R.id.register);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+
+                // Retrieve the user's hashed password and ID from the Firestore database
+                db.collection("users")
+                        .whereEqualTo("email", email)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                                DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                                String hashedPassword = document.getString("password");
+                                String userId = document.getId();
+
+                                // Verify the provided password
+                                if (verifyPassword(password, hashedPassword)) {
+                                    // Password is correct, perform login logic
+                                    String role = document.getString("role");
+
+                                    if (role.equals(Role.ADMIN.name())) {
+                                        // Admin login
+                                        Toast.makeText(LoginActivity.this, "Admin login successful", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+                                        intent.putExtra("userId", userId);
+                                        startActivity(intent);
+                                    } else if (role.equals(Role.USER.name())) {
+                                        // User login
+                                        String name = document.getString("name");
+                                        // ... Get other user data
+                                        Toast.makeText(LoginActivity.this, "User login successful", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        intent.putExtra("userId", userId);
+                                        startActivity(intent);
+                                    }
+                                } else {
+                                    // Password is incorrect
+                                    Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                // User does not exist
+                                Toast.makeText(LoginActivity.this, "User does not exist", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+}

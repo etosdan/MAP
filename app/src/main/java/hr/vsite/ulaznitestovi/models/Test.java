@@ -11,6 +11,10 @@ public class Test {
     private boolean isPassed;
     private String authorId;
 
+    public Test() {
+        // Required empty constructor for Firebase Firestore deserialization
+    }
+
     public Test(String testId, String testName, int testDuration, List<Question> questions, String authorId) {
         this.testId = testId;
         this.testName = testName;
@@ -18,11 +22,12 @@ public class Test {
         this.questions = questions;
         this.authorId = authorId;
     }
-public Test (String testName){
-        this.testName=testName;
-}
 
-    public Test( String testName, int testDuration, List<Question> questions, String authorId) {
+    public Test(String testName) {
+        this.testName = testName;
+    }
+
+    public Test(String testName, int testDuration, List<Question> questions, String authorId) {
         this.testName = testName;
         this.testDuration = testDuration;
         this.questions = questions;
@@ -40,8 +45,9 @@ public Test (String testName){
     public String getTestName() {
         return testName;
     }
-    public void setTestName(String testName){
-        this.testName=testName;
+
+    public void setTestName(String testName) {
+        this.testName = testName;
     }
 
     public long getTestDuration() {
@@ -55,6 +61,7 @@ public Test (String testName){
     public List<Question> getQuestions() {
         return questions;
     }
+
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
